@@ -24,6 +24,7 @@ import android.os.Build;
 import android.text.format.DateFormat;
 
 import org.ocs.android.actions.OCSLog;
+import org.ocs.android.actions.OCSSettings;
 import org.ocs.android.actions.Utils;
 
 import java.util.ArrayList;
@@ -70,6 +71,9 @@ public class OCSHardware implements OCSSectionInterface {
         this.processorSpeed = String.valueOf(SystemInfos.getProcessorSpeed() / 1000);
         this.memory = String.valueOf(SystemInfos.getMemtotal() / 1024);
         this.swap = String.valueOf(SystemInfos.getSwaptotal() / 1024);
+
+        // Change Userid to the tag shared preferences get an istance of OCSSettings and get the tag
+
         this.userid = Build.USER;
         this.lastUser = Build.USER;
         this.dateLastLog = (String) DateFormat.format("MM/dd/yy hh:mm:ss", System.currentTimeMillis());
@@ -124,7 +128,7 @@ public class OCSHardware implements OCSSectionInterface {
     }
 
     public String getUserid() {
-        return userid;
+        return OCSSettings.getInstance().getDeviceTag();
     }
 
     public String getIpAddress() {

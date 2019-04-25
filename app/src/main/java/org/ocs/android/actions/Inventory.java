@@ -24,6 +24,7 @@ import android.content.Context;
 import android.provider.Settings.Secure;
 import android.util.Log;
 
+import org.ocs.android.agent.R;
 import org.ocs.android.sections.OCSBios;
 import org.ocs.android.sections.OCSDrives;
 import org.ocs.android.sections.OCSHardware;
@@ -224,7 +225,8 @@ public class Inventory {
         strOut.append(videos.toXML());
         strOut.append("    <ACCOUNTINFO>\n");
         strOut.append("      <KEYNAME>TAG</KEYNAME>\n");
-        Utils.xmlLine(strOut, "KEYVALUE", OCSSettings.getInstance().getDeviceTag());
+        // change tag section to mobile
+        Utils.xmlLine(strOut, "KEYVALUE", "MOBILE");
         strOut.append("    </ACCOUNTINFO>\n");
         strOut.append("  </CONTENT>\n");
         strOut.append("  <QUERY>INVENTORY</QUERY>\n");

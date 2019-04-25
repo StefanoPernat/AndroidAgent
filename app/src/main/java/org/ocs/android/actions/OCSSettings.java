@@ -139,7 +139,7 @@ public class OCSSettings {
 
     public String getDeviceTag() {
 
-        return prefs.getString(KDEVICETAG, ctx.getString(R.string.pref_default_devicetag));
+        return prefs.getString(KDEVICETAG, ctx.getString(R.string.pref_default_user));
     }
 
     public boolean isSSLStrict() {

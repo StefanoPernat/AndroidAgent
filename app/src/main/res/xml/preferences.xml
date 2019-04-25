@@ -23,11 +23,11 @@
 <PreferenceScreen xmlns:android="http://schemas.android.com/apk/res/android">
     <PreferenceCategory android:title="@string/pref_header_general">
         <EditTextPreference
-            android:defaultValue="@string/pref_default_devicetag"
-            android:dialogTitle="@string/pref_title_devicetag"
+            android:defaultValue="@string/pref_default_user"
+            android:dialogTitle="@string/pref_title_deviceuser"
             android:key="k_devicetag"
-            android:summary="@string/pref_description_devicetag"
-            android:title="@string/pref_title_devicetag"/>
+            android:summary="@string/pref_description_deviceuser"
+            android:title="@string/pref_title_deviceuser"/>
         <CheckBoxPreference
             android:enabled="true"
             android:key="k_debug"
