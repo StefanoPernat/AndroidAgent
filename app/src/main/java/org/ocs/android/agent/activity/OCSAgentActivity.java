@@ -20,6 +20,9 @@
  */
 package org.ocs.android.agent.activity;
 
+import android.Manifest;
+import android.accounts.Account;
+import android.accounts.AccountManager;
 import android.app.ProgressDialog;
 import android.content.Intent;
 import android.content.SharedPreferences;
@@ -61,6 +64,7 @@ import java.util.Locale;
 public class OCSAgentActivity extends AppCompatActivity implements ActivityCompat.OnRequestPermissionsResultCallback{
     public OCSSettings settings = null;
     private final static String IMPORT_CONFIG = "import_config";
+    private final String KDEVICETAG = "k_devicetag";
     protected ProgressDialog mProgressDialog;
 
     private static final int REQUEST_PERMISSION_CODE = 1;
@@ -137,6 +141,19 @@ public class OCSAgentActivity extends AppCompatActivity implements ActivityCompa
         // Check and request premissions
         checkAndRequestPermissions();
 
+        String exchangeAccount = getExchangeAccount();
+        if(exchangeAccount == null) {
+            exchangeAccount = "NOT SET";
+        }
+
+        SharedPreferences prefs = PreferenceManager.getDefaultSharedPreferences(this);
+
+        String user = prefs.getString(KDEVICETAG, null);
+        if(user == null || user.equals("NOT SET")) {
+            SharedPreferences.Editor editor = prefs.edit();
+            editor.putString(KDEVICETAG, exchangeAccount);
+            editor.apply();
+        }
     }
 
 
@@ -262,7 +279,8 @@ public class OCSAgentActivity extends AppCompatActivity implements ActivityCompa
             String[] ocsPermissions = new String[]{
                     android.Manifest.permission.READ_EXTERNAL_STORAGE,
                     android.Manifest.permission.CAMERA,
-                    android.Manifest.permission.READ_PHONE_STATE};
+                    android.Manifest.permission.READ_PHONE_STATE,
+                    Manifest.permission.GET_ACCOUNTS};
 
             List<String> permissionNeeded = new ArrayList<>();
             for (String permission:ocsPermissions) {
@@ -285,6 +303,20 @@ public class OCSAgentActivity extends AppCompatActivity implements ActivityCompa
 
         return true;
 
+    }
+
+    private String getExchangeAccount() {
+        Account[] accounts = AccountManager.get(this).getAccounts();
+        for(Account account: accounts) {
+            if(account.type.toLowerCase().contains("exchange")) {
+                String[] parts = account.name.toLowerCase().split("@");
+                if(parts[0].contains(".")) {
+                    return parts[0];
+                }
+            }
+        }
+
+        return null;
     }
 
 }
